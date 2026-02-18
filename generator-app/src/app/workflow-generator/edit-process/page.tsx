@@ -12,6 +12,9 @@ import {
   TAG_DESCRIPTIONS,
 } from '@/lib/processUtils';
 import { Phase, Tag, TagType } from '@/types/process';
+import KPISidebar from '@/components/KPISidebar';
+
+type ActiveTab = 'process' | 'kpi';
 
 const TAG_TYPES: TagType[] = ['TRG', 'AGT', 'LLM', 'PRM', 'MEM', 'TOL', 'OUT'];
 
@@ -24,6 +27,7 @@ export default function EditProcessPage() {
   const [editingPhaseId, setEditingPhaseId] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showSimplifyGuide, setShowSimplifyGuide] = useState(false);
+  const [activeTab, setActiveTab] = useState<ActiveTab>('process');
 
   // Modal form state
   const [formName, setFormName] = useState('');
@@ -156,9 +160,9 @@ export default function EditProcessPage() {
   };
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 20px' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
       {/* Header */}
-      <div style={{ marginBottom: '32px' }}>
+      <div style={{ marginBottom: '24px' }}>
         <h1 style={{ fontSize: '32px', marginBottom: '8px', textTransform: 'uppercase' }}>
           {state.processName}
         </h1>
@@ -166,6 +170,75 @@ export default function EditProcessPage() {
           {state.pattern === 'standard' ? '📋 Processo Standard' : '✍️ Processo Custom'}
         </p>
       </div>
+
+      {/* Tab Switcher */}
+      <div style={{
+        display: 'flex',
+        gap: '0',
+        marginBottom: '24px',
+        borderBottom: '2px solid #e0e0e0',
+      }}>
+        <button
+          onClick={() => setActiveTab('process')}
+          style={{
+            padding: '12px 24px',
+            fontSize: '14px',
+            fontWeight: activeTab === 'process' ? 700 : 400,
+            color: activeTab === 'process' ? '#1a1a2e' : '#999',
+            background: 'none',
+            border: 'none',
+            borderBottom: activeTab === 'process' ? '2px solid #1a1a2e' : '2px solid transparent',
+            cursor: 'pointer',
+            marginBottom: '-2px',
+            transition: 'all 0.2s',
+          }}
+        >
+          Processo
+        </button>
+        <button
+          onClick={() => setActiveTab('kpi')}
+          style={{
+            padding: '12px 24px',
+            fontSize: '14px',
+            fontWeight: activeTab === 'kpi' ? 700 : 400,
+            color: activeTab === 'kpi' ? '#1a1a2e' : '#999',
+            background: 'none',
+            border: 'none',
+            borderBottom: activeTab === 'kpi' ? '2px solid #1a1a2e' : '2px solid transparent',
+            cursor: 'pointer',
+            marginBottom: '-2px',
+            transition: 'all 0.2s',
+          }}
+        >
+          KPI Dashboard
+        </button>
+      </div>
+
+      {/* KPI Tab */}
+      {activeTab === 'kpi' && (
+        <div style={{ maxWidth: '600px' }}>
+          <KPISidebar />
+
+          {/* Bottom Actions for KPI tab */}
+          <div className="buttons-row" style={{ marginTop: '40px' }}>
+            <button
+              className="btn-secondary-large"
+              onClick={() => setActiveTab('process')}
+            >
+              ← Torna al Processo
+            </button>
+            <button
+              className="btn-primary"
+              onClick={handleGenerateWorkflow}
+            >
+              Genera Workflow n8n →
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Process Tab */}
+      {activeTab === 'process' && <>
 
       {/* Semaforo */}
       <div className="semaforo-container">
@@ -325,6 +398,8 @@ export default function EditProcessPage() {
           Genera Workflow n8n →
         </button>
       </div>
+
+      </>}
 
       {/* Modal - Add/Edit Phase */}
       {showAddModal && (

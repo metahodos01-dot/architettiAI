@@ -6,6 +6,7 @@ import {
   ProcessAction,
   ProcessContextType,
   ProcessFlow,
+  KPIResults,
 } from '@/types/process';
 import {
   calculateSemaforoStatus,
@@ -17,6 +18,7 @@ import {
   removeTag as removeTagUtil,
   generatePhaseId,
 } from './processUtils';
+import { calculateKPIResults } from './kpiUtils';
 
 const ProcessContext = createContext<ProcessContextType | undefined>(undefined);
 
@@ -25,6 +27,7 @@ const initialState: ProcessState = {
   processName: 'Nuovo Processo',
   pattern: 'custom',
   templateId: undefined,
+  kpis: {},
 };
 
 function processReducer(state: ProcessState, action: ProcessAction): ProcessState {
@@ -89,12 +92,28 @@ function processReducer(state: ProcessState, action: ProcessAction): ProcessStat
         processName: action.payload.name,
         pattern: action.payload.pattern,
         templateId: action.payload.templateId,
+        kpis: {},
       };
 
     case 'SET_PATTERN':
       return {
         ...state,
         pattern: action.payload,
+      };
+
+    case 'SET_KPI':
+      return {
+        ...state,
+        kpis: {
+          ...state.kpis,
+          [action.payload.phaseId]: action.payload.kpi,
+        },
+      };
+
+    case 'RESET_KPIS':
+      return {
+        ...state,
+        kpis: {},
       };
 
     case 'RESET':
@@ -120,11 +139,18 @@ export function ProcessProvider({ children }: ProcessProviderProps) {
     return state.phases.length;
   };
 
+  const getKPIResults = (): KPIResults | null => {
+    const kpiEntries = Object.keys(state.kpis);
+    if (kpiEntries.length === 0) return null;
+    return calculateKPIResults(state.phases, state.kpis);
+  };
+
   const value: ProcessContextType = {
     state,
     dispatch,
     getSemaforoStatus,
     getPhaseCount,
+    getKPIResults,
   };
 
   return (

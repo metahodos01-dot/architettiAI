@@ -43,13 +43,16 @@ export type ProcessAction =
   | { type: 'SET_PROCESS_NAME'; payload: string }
   | { type: 'LOAD_TEMPLATE'; payload: ProcessFlow }
   | { type: 'SET_PATTERN'; payload: 'standard' | 'custom' }
-  | { type: 'RESET' };
+  | { type: 'RESET' }
+  | { type: 'SET_KPI'; payload: { phaseId: string; kpi: ProcessKPI } }
+  | { type: 'RESET_KPIS' };
 
 export interface ProcessState {
   phases: Phase[];
   processName: string;
   pattern: 'standard' | 'custom';
   templateId?: string;
+  kpis: Record<string, ProcessKPI>;
 }
 
 export interface ProcessContextType {
@@ -57,6 +60,40 @@ export interface ProcessContextType {
   dispatch: React.Dispatch<ProcessAction>;
   getSemaforoStatus: () => SemaforoStatus;
   getPhaseCount: () => number;
+  getKPIResults: () => KPIResults | null;
+}
+
+// KPI Types per Fase 4
+export interface ProcessKPI {
+  phaseId: string;
+  timeManualMinutes: number;    // Tempo manuale stimato (minuti)
+  timeAutoMinutes: number;      // Tempo automatizzato stimato (minuti)
+  errorRateManual: number;      // Tasso errore manuale (0-100%)
+  errorRateAuto: number;        // Tasso errore automatizzato (0-100%)
+  costManualEur: number;        // Costo manuale (EUR)
+  costAutoEur: number;          // Costo automatizzato (EUR)
+  volumePerDay: number;         // Volume operazioni/giorno
+}
+
+export interface KPIResults {
+  totalTimeSavedMinutes: number;
+  totalTimeSavedPercent: number;
+  totalErrorReduction: number;
+  totalCostSavedEur: number;
+  totalCostSavedPercent: number;
+  roiPercent: number;
+  paybackDays: number;
+  phaseResults: PhaseKPIResult[];
+}
+
+export interface PhaseKPIResult {
+  phaseId: string;
+  phaseName: string;
+  timeSavedMinutes: number;
+  timeSavedPercent: number;
+  errorReduction: number;
+  costSavedEur: number;
+  efficiencyScore: number; // 0-100
 }
 
 // Standard templates definitions
