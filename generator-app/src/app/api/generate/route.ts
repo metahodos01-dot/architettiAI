@@ -585,11 +585,24 @@ function getDefaultTypeVersion(type: string): number {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { prompt, name = 'Generated Workflow' } = body;
+    let { prompt, name = 'Generated Workflow', phases } = body;
+
+    // Se viene passato phases[], genera il prompt da essi
+    if (Array.isArray(phases) && phases.length > 0) {
+      // Costruisci prompt da fasi
+      const phasesDescription = phases
+        .map((p: any, i: number) => {
+          const tags = p.tags?.map((t: any) => `#${t.type}`).join(' ') || '';
+          return `${i + 1}. ${p.name}\n   Descrizione: ${p.description}\n   Tag: ${tags}`;
+        })
+        .join('\n');
+
+      prompt = `Genera un workflow n8n da queste fasi:\n\n${phasesDescription}\n\nMantieni l'ordine delle fasi e rispetta i tag assegnati per gli integrazioni (TOL), trigger (TRG), output (OUT).`;
+    }
 
     if (!prompt || !prompt.trim()) {
       return NextResponse.json(
-        { error: 'Prompt required' },
+        { error: 'Prompt o phases richiesti' },
         { status: 400 }
       );
     }

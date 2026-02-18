@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ProcessProvider } from "@/lib/processContext";
 
 export const metadata: Metadata = {
   title: "n8n Workflow Generator | MetàHodos",
@@ -19,7 +20,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <ProcessProvider>
+          {children}
+        </ProcessProvider>
+      </body>
     </html>
   );
 }
