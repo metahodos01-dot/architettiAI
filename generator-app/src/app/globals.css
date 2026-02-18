@@ -1,0 +1,398 @@
+/* MetàHodos Design System - n8n Workflow Generator */
+
+/* CSS Variables */
+:root {
+  /* Colori MetàHodos */
+  --color-orange: #F89F5A;
+  --color-pink: #EF6F6C;
+  --color-green: #8CC63F;
+  --color-gray-dark: #3C3C3C;
+  --color-gray-medium: #4A4A4A;
+  --color-gray-light: #F5F5F5;
+  --color-gray-border: #E0E0E0;
+  --color-white: #FFFFFF;
+
+  /* Font */
+  --font-headings: 'Saira Condensed', sans-serif;
+  --font-body: 'Lato', sans-serif;
+
+  /* Font Sizes */
+  --size-hero: 86px;
+  --size-h1: 56px;
+  --size-h2: 32px;
+  --size-body: 19px;
+  --size-subtitle: 22px;
+  --size-button: 20px;
+
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 40px;
+  --spacing-xl: 60px;
+  --spacing-section: 80px;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 15px;
+  --radius-lg: 20px;
+  --radius-pill: 30px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.1);
+  --shadow-button: 0 4px 12px rgba(248, 159, 90, 0.3);
+
+  /* Transitions */
+  --transition: 0.3s ease;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: 1.8;
+  color: var(--color-gray-medium);
+  background: var(--color-white);
+}
+
+/* Headings with Saira Condensed */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-headings);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-gray-dark);
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Primary Button */
+.btn-primary {
+  background: var(--color-orange);
+  color: var(--color-white);
+  font-family: var(--font-headings);
+  font-size: var(--size-button);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 18px 50px;
+  border-radius: var(--radius-pill);
+  border: none;
+  box-shadow: var(--shadow-button);
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-primary:hover {
+  background: #FDB175;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(248, 159, 90, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Card Component */
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Inputs */
+.form-input {
+  width: 100%;
+  padding: 12px 20px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-border);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  color: var(--color-gray-dark);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-orange);
+  box-shadow: 0 0 0 3px rgba(248, 159, 90, 0.1);
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+/* Brand Dots */
+.brand-dots {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.dot-pink {
+  background: var(--color-pink);
+}
+
+.dot-orange {
+  background: var(--color-orange);
+}
+
+.dot-green {
+  background: var(--color-green);
+}
+
+/* Title with Underline */
+.title-with-line {
+  font-family: var(--font-headings);
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-gray-dark);
+  letter-spacing: 0.5px;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+.title-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.title-underline-orange {
+  background: var(--color-orange);
+}
+
+.title-underline-pink {
+  background: var(--color-pink);
+}
+
+.title-underline-green {
+  background: var(--color-green);
+}
+
+/* Hero Section */
+.hero {
+  background: var(--color-gray-dark);
+  color: var(--color-white);
+  padding: var(--spacing-section) 20px;
+  text-align: center;
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: var(--color-white);
+  clip-path: ellipse(100% 100% at 50% 100%);
+}
+
+.hero h1 {
+  font-family: var(--font-headings);
+  font-size: var(--size-hero);
+  font-weight: 700;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.hero .subtitle {
+  font-family: var(--font-headings);
+  font-size: 34px;
+  font-weight: 400;
+  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Node Tags */
+.node-tag {
+  background: rgba(248, 159, 90, 0.15);
+  border: 1px solid rgba(248, 159, 90, 0.4);
+  color: var(--color-orange);
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Workflow Node Card */
+.workflow-node {
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-border);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+  min-width: 140px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.workflow-node:hover {
+  border-color: var(--color-orange);
+  box-shadow: var(--shadow-md);
+}
+
+.workflow-node-name {
+  font-family: var(--font-headings);
+  font-weight: 600;
+  color: var(--color-gray-dark);
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.workflow-node-type {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-gray-medium);
+  margin-top: 4px;
+}
+
+/* Arrow between nodes */
+.node-arrow {
+  color: var(--color-orange);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* JSON Output */
+.json-output {
+  background: var(--color-gray-dark);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  overflow: auto;
+  max-height: 320px;
+}
+
+.json-output pre {
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 12px;
+  color: var(--color-green);
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Example suggestions */
+.example-btn {
+  text-align: left;
+  background: var(--color-gray-light);
+  border: 1px solid var(--color-gray-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-gray-medium);
+  transition: var(--transition);
+  cursor: pointer;
+  width: 100%;
+}
+
+.example-btn:hover {
+  border-color: var(--color-orange);
+  background: var(--color-white);
+  color: var(--color-gray-dark);
+}
+
+/* Footer */
+.footer {
+  background: var(--color-gray-dark);
+  color: rgba(255, 255, 255, 0.5);
+  padding: var(--spacing-lg) 20px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.footer .brand-dots {
+  margin: 20px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  :root {
+    --size-hero: 48px;
+    --size-h1: 38px;
+    --size-h2: 24px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  .hero .subtitle {
+    font-size: 22px;
+  }
+
+  .btn-primary {
+    padding: 14px 30px;
+    font-size: 16px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+}
+
+/* Keyframes for spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

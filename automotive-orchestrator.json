@@ -1,0 +1,365 @@
+{
+  "name": "Automotive Design Orchestrator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "automotive-concept",
+        "options": {}
+      },
+      "id": "e1f2g3h4-i5j6-k7l8-m9n0-o1p2q3r4s5t6",
+      "name": "Start Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all();"
+      },
+      "id": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",
+      "name": "Prepare Branches",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://cloud.leonardo.ai/api/rest/v1/generations",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$credentials.leonardoApi}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "Automotive {{ $json.body.segmento }} concept car, futuristic design, studio lighting, 4k render"
+            },
+            {
+              "name": "modelId",
+              "value": "6bef9f1b-29cb-40c7-b9df-32b51c1f67d3"
+            },
+            {
+              "name": "width",
+              "value": "1024"
+            },
+            {
+              "name": "height",
+              "value": "768"
+            },
+            {
+              "name": "num_images",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q7",
+      "name": "Generate Design",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        700,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Automotive Weight Balance Calculator\n// Formule basate su principi di fisica automobilistica\n\nconst input = $input.first().json.body || $input.first().json;\n\n// Parametri di input\nconst segmento = input.segmento || 'Sedan';\nconst targetAutonomia = input.target_autonomia_km || 500;\nconst materiali = input.materiali || ['Acciaio'];\nconst pesoTarget = input.peso_target_kg || 1800;\n\n// === COSTANTI DI PESO PER COMPONENTE (in kg) ===\nconst PESO_BASE = {\n  'SUV': { telaio: 450, carrozzeria: 380, interni: 220 },\n  'Sedan': { telaio: 380, carrozzeria: 320, interni: 200 },\n  'Hatchback': { telaio: 320, carrozzeria: 280, interni: 180 },\n  'Sportiva': { telaio: 280, carrozzeria: 250, interni: 150 }\n};\n\n// === COEFFICIENTI MATERIALE (moltiplicatore peso) ===\nconst COEFF_MATERIALI = {\n  'Acciaio': 1.0,\n  'Alluminio': 0.65,\n  'Fibra di Carbonio': 0.45,\n  'Magnesio': 0.55,\n  'Composito': 0.70\n};\n\n// === PESO BATTERIA (formula: autonomia * 0.3 kg/km per EV) ===\nconst pesoBatteria = targetAutonomia * 0.3;\n\n// === CALCOLO PESO COMPONENTI ===\nconst pesoBase = PESO_BASE[segmento] || PESO_BASE['Sedan'];\n\n// Calcola coefficiente medio materiali\nconst coeffMedio = materiali.reduce((acc, mat) => {\n  return acc + (COEFF_MATERIALI[mat] || 1.0);\n}, 0) / materiali.length;\n\n// Pesi componenti con coefficiente materiale\nconst pesoTelaio = pesoBase.telaio * coeffMedio;\nconst pesoCarrozzeria = pesoBase.carrozzeria * coeffMedio;\nconst pesoInterni = pesoBase.interni; // interni non influenzati da materiali esterni\n\n// === PESO PROPULSIONE ===\nconst pesoPropulsione = 180; // Motore elettrico + trasmissione\nconst pesoSospensioni = 120;\nconst pesoRuote = 80;\nconst pesoSistemiSicurezza = 50;\n\n// === CALCOLO PESO TOTALE ===\nconst pesoTotale = Math.round(\n  pesoTelaio +\n  pesoCarrozzeria +\n  pesoInterni +\n  pesoBatteria +\n  pesoPropulsione +\n  pesoSospensioni +\n  pesoRuote +\n  pesoSistemiSicurezza\n);\n\n// === DISTRIBUZIONE PESI (Asse Anteriore / Posteriore) ===\n// Formula: Per EV con batteria centrale, mira a 50/50\nconst pesoAnteriore = Math.round(pesoTotale * 0.48); // 48% anteriore\nconst pesoPosteriore = Math.round(pesoTotale * 0.52); // 52% posteriore\n\n// === CENTRO DI GRAVITÀ (altezza in mm) ===\n// Formula semplificata: CdG = (altezza telaio * 0.45)\nconst altezzaCdG = segmento === 'SUV' ? 620 : segmento === 'Sportiva' ? 420 : 520;\n\n// === VALUTAZIONE ===\nconst differenzaPeso = pesoTotale - pesoTarget;\nconst superaPesoTarget = pesoTotale > pesoTarget;\nconst distribuzioneOttimale = Math.abs(pesoAnteriore - pesoPosteriore) < (pesoTotale * 0.05);\n\n// === OUTPUT ===\nreturn [{\n  json: {\n    ramo: 'B_Ingegneria',\n    segmento: segmento,\n    materiali_utilizzati: materiali,\n    coefficiente_materiale: coeffMedio.toFixed(2),\n    \n    // Dettaglio pesi\n    dettaglio_pesi: {\n      telaio_kg: Math.round(pesoTelaio),\n      carrozzeria_kg: Math.round(pesoCarrozzeria),\n      interni_kg: pesoInterni,\n      batteria_kg: Math.round(pesoBatteria),\n      propulsione_kg: pesoPropulsione,\n      sospensioni_kg: pesoSospensioni,\n      ruote_kg: pesoRuote,\n      sicurezza_kg: pesoSistemiSicurezza\n    },\n    \n    // Risultati bilanciamento\n    peso_totale_kg: pesoTotale,\n    peso_target_kg: pesoTarget,\n    differenza_kg: differenzaPeso,\n    supera_target: superaPesoTarget,\n    \n    // Distribuzione\n    distribuzione: {\n      anteriore_kg: pesoAnteriore,\n      posteriore_kg: pesoPosteriore,\n      rapporto: `${Math.round((pesoAnteriore/pesoTotale)*100)}/${Math.round((pesoPosteriore/pesoTotale)*100)}`,\n      ottimale: distribuzioneOttimale\n    },\n    \n    // Centro di gravità\n    centro_gravita_mm: altezzaCdG,\n    \n    // Status\n    status: superaPesoTarget ? 'REVISIONE_RICHIESTA' : 'OK',\n    messaggio: superaPesoTarget \n      ? `Peso totale (${pesoTotale}kg) supera il target (${pesoTarget}kg) di ${differenzaPeso}kg. Richiesta revisione materiali.`\n      : `Peso totale (${pesoTotale}kg) entro il target. Distribuzione ${distribuzioneOttimale ? 'ottimale' : 'accettabile'}.`\n  }\n}];"
+      },
+      "id": "c3d4e5f6-a7b8-c9d0-e1f2-g3h4i5j6k7l8",
+      "name": "Calculate Weight Balance",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "text": "Sei un esperto di normative automotive europee. Analizza i seguenti parametri del veicolo e verifica la conformità con:\n1. Euro NCAP (standard sicurezza)\n2. WLTP (emissioni e autonomia)\n3. ECE R94/R95 (crash test frontale/laterale)\n\nParametri veicolo:\n- Segmento: {{ $json.body.segmento }}\n- Peso target: {{ $json.body.peso_target_kg }} kg\n- Materiali: {{ $json.body.materiali.join(', ') }}\n\nRispondi con:\n- Lista requisiti obbligatori\n- Potenziali issue di compliance\n- Suggerimenti per superare i test Euro NCAP 5 stelle",
+        "options": {}
+      },
+      "id": "d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9",
+      "name": "AI Compliance Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1,
+      "position": [
+        700,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4-turbo"
+      },
+      "id": "o9p0q1r2-s3t4-u5v6-w7x8-y9z0a1b2c3d4",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        700,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByPosition"
+      },
+      "id": "e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0",
+      "name": "Wait for Branches",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Trova i risultati dei 3 rami\n// Note: merge node returns items in order of inputs if using mergeByPosition\n// We need to match inputs carefully. For safety we check content\nconst engineeringResult = items.find(i => i.json.ramo === 'B_Ingegneria')?.json || {};\n// For others we might just take by index or check structure if specific props exist\nconst designResult = items[0].json.body ? {} : items[0].json; \nconst complianceResult = items[2].json.output ? { rating: 'Pending', issues: [items[2].json.output] } : {};\n\nreturn [{\n  json: {\n    report_tecnico: {\n      titolo: `Concept Vehicle - ${engineeringResult.segmento || 'N/A'}`,\n      data_generazione: new Date().toISOString(),\n      \n      sezione_design: {\n        immagini_generate: designResult.images || [],\n        stile: designResult.style || 'Futuristic'\n      },\n      \n      sezione_ingegneria: {\n        peso_totale_kg: engineeringResult.peso_totale_kg,\n        distribuzione: engineeringResult.distribuzione,\n        centro_gravita_mm: engineeringResult.centro_gravita_mm,\n        status: engineeringResult.status\n      },\n      \n      sezione_compliance: {\n        euro_ncap_rating: complianceResult.rating || 'Pending',\n        requisiti: complianceResult.requirements || [],\n        issues: complianceResult.issues || []\n      },\n      \n      richiede_revisione: engineeringResult.supera_target === true\n    }\n  }\n}];"
+      },
+      "id": "f6g7h8i9-j0k1-l2m3-n4o5-p6q7r8s9t0u1",
+      "name": "Compile Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.report_tecnico.richiede_revisione }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "g7h8i9j0-k1l2-m3n4-o5p6-q7r8s9t0u1v2",
+      "name": "Check Weight",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "channel": "#team-telaio",
+        "text": "🚨 *REVISIONE PESO RICHIESTA*\n\nIl peso totale del concept *{{ $json.report_tecnico.titolo }}* supera il target.\n\n*Dettagli:*\n• Peso calcolato: {{ $json.report_tecnico.sezione_ingegneria.peso_totale_kg }} kg\n• Distribuzione: {{ $json.report_tecnico.sezione_ingegneria.distribuzione.rapporto }}\n\n*Azione richiesta:* Rivedere selezione materiali e rilanciare simulazione.",
+        "otherOptions": {}
+      },
+      "id": "h8i9j0k1-l2m3-n4o5-p6q7-r8s9t0u1v2w3",
+      "name": "Notify Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        1650,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "database",
+        "operation": "create",
+        "databaseId": "DATABASE_ID_HERE",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Name",
+              "title": "={{ $json.report_tecnico.titolo }}"
+            },
+            {
+              "key": "Status",
+              "select": "Approved"
+            }
+          ]
+        }
+      },
+      "id": "i9j0k1l2-m3n4-o5p6-q7r8-s9t0u1v2w3x4",
+      "name": "Save to Notion",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2,
+      "position": [
+        1650,
+        450
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "j0k1l2m3-n4o5-p6q7-r8s9-t0u1v2w3x4y5",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "channel": "#alerts-automotive",
+        "text": "❌ *WORKFLOW ERROR - Automotive Orchestrator*\n\n*Errore:* {{ $json.error.message }}\n*Nodo fallito:* {{ $json.error.node.name }}\n*Timestamp:* {{ $now.toISO() }}\n*Execution ID:* {{ $execution.id }}\n\n@engineering-team",
+        "otherOptions": {}
+      },
+      "id": "k1l2m3n4-o5p6-q7r8-s9t0-u1v2w3x4y5z6",
+      "name": "Alert Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        450,
+        600
+      ]
+    }
+  ],
+  "connections": {
+    "Start Trigger": {
+      "main": [
+        [
+          {
+            "node": "Prepare Branches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Branches": {
+      "main": [
+        [
+          {
+            "node": "Generate Design",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Calculate Weight Balance",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Compliance Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Design": {
+      "main": [
+        [
+          {
+            "node": "Wait for Branches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Weight Balance": {
+      "main": [
+        [
+          {
+            "node": "Wait for Branches",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "AI Compliance Agent": {
+      "main": [
+        [
+          {
+            "node": "Wait for Branches",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Compliance Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Branches": {
+      "main": [
+        [
+          {
+            "node": "Compile Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compile Report": {
+      "main": [
+        [
+          {
+            "node": "Check Weight",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Weight": {
+      "main": [
+        [
+          {
+            "node": "Notify Slack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Save to Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Alert Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

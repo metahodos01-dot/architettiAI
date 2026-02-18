@@ -1,0 +1,26 @@
+{
+    "mcpServers": {
+        "n8n-mcp": {
+            "command": "/usr/local/bin/npx",
+            "args": [
+                "-y",
+                "n8n-mcp"
+            ],
+            "env": {
+                "MCP_MODE": "stdio"
+            },
+            "autoAllow": true
+        },
+        "github": {
+            "command": "/usr/local/bin/npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-github"
+            ],
+            "env": {
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "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KEN"
+            },
+            "autoAllow": true
+        }
+    }
+}

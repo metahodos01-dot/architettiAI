@@ -1,0 +1,248 @@
+{
+    "project": "AI Training Platform - Progetto Athena",
+    "branchName": "ralph/athena-training-platform",
+    "description": "Piattaforma di formazione AI per manager aziendali. 4 laboratori da 6 ore ciascuno, con metodologia Lean-AI, strumenti pratici (n8n, Antigravity, Comet, Claude Code), e focus su privacy, sicurezza e governance aziendale.",
+    "userStories": [
+        {
+            "id": "US-001",
+            "title": "Home Page con 4 Laboratori",
+            "description": "As a manager, I want to see a home page with 4 lab cards so that I can navigate the course structure.",
+            "acceptanceCriteria": [
+                "Home page displays 4 laboratory cards: Lab 1 (Lean + AI Intro), Lab 2 (Governance), Lab 3 (Workflow Building), Lab 4 (Integration & Handover)",
+                "Each card shows lab number, title, duration (6h), and brief description",
+                "Cards link to respective lab pages",
+                "MetàHodos design with Saira Condensed font and brand colors",
+                "Typecheck passes"
+            ],
+            "priority": 1,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-002",
+            "title": "Lab 1: Modulo Lean - Mappatura Processi",
+            "description": "As a manager, I want to map my current process (AS-IS) so that I can identify inefficiencies before automation.",
+            "acceptanceCriteria": [
+                "Create page /lab1/lean-mapping with interactive process mapper",
+                "User can add process steps with: name, description, time, responsible, pain points",
+                "Visual flow diagram of the process",
+                "Waste identification checklist (7 Lean wastes: Overproduction, Waiting, Transport, Over-processing, Inventory, Motion, Defects)",
+                "Export process map as JSON",
+                "Typecheck passes"
+            ],
+            "priority": 2,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-003",
+            "title": "Lab 1: Modulo Lean - Redesign TO-BE",
+            "description": "As a manager, I want to redesign my process eliminating waste so that I have a simplified version ready for automation.",
+            "acceptanceCriteria": [
+                "Create page /lab1/lean-redesign that loads AS-IS from previous module",
+                "User can mark steps as: Keep, Eliminate, Simplify, Automate",
+                "Side-by-side comparison AS-IS vs TO-BE",
+                "Calculate time savings percentage",
+                "Generate simplified process ready for Lab 3",
+                "Typecheck passes"
+            ],
+            "priority": 3,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-004",
+            "title": "Lab 1: Privacy e Sicurezza AI",
+            "description": "As a manager, I want to understand privacy and security implications of AI so that I can make informed decisions.",
+            "acceptanceCriteria": [
+                "Create page /lab1/privacy-security with educational content",
+                "Sections: Data Privacy (GDPR basics), AI Security Risks, Best Practices",
+                "Interactive checklist: 'Is my data safe?' with questions about data sensitivity",
+                "Warning cards for common mistakes (sharing sensitive data with public LLMs)",
+                "Quiz with 5 questions on privacy/security",
+                "Typecheck passes"
+            ],
+            "priority": 4,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-005",
+            "title": "Lab 2: LLM Aziendali e Governance",
+            "description": "As a manager, I want to understand corporate LLM policies so that I use approved tools.",
+            "acceptanceCriteria": [
+                "Create page /lab2/corporate-llm with governance content",
+                "Explain difference: Public LLMs vs Enterprise LLMs vs Self-hosted",
+                "Table comparing: ChatGPT, Claude, Azure OpenAI, AWS Bedrock, local models",
+                "Section on 'Ask your IT': template questions for IT department",
+                "Decision tree: 'Which LLM should I use for my use case?'",
+                "Typecheck passes"
+            ],
+            "priority": 5,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-006",
+            "title": "Lab 2: RAG - Retrieval Augmented Generation",
+            "description": "As a manager, I want to understand RAG so that I can leverage company knowledge bases with AI.",
+            "acceptanceCriteria": [
+                "Create page /lab2/rag-explained with visual explanation",
+                "Animated diagram showing: Documents → Embeddings → Vector DB → Query → LLM → Answer",
+                "Real-world examples: Company FAQ bot, Document Q&A, Knowledge base search",
+                "Benefits section: accuracy, up-to-date info, source citations",
+                "Limitations section: setup complexity, data quality dependency",
+                "Typecheck passes"
+            ],
+            "priority": 6,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-007",
+            "title": "Lab 2: Matrice Decisionale Strumenti",
+            "description": "As a manager, I want a decision matrix so that I know when to use n8n vs Antigravity vs Comet vs Claude Code.",
+            "acceptanceCriteria": [
+                "Create page /lab2/tool-matrix with interactive decision tool",
+                "Matrix with criteria: Complexity, Technical skill required, Use case type, Output type",
+                "Tool profiles: n8n (workflows), Antigravity (apps), Comet (browser automation), Claude Code (coding assistance)",
+                "Interactive questionnaire that recommends the right tool",
+                "Examples for each tool with screenshots or diagrams",
+                "Typecheck passes"
+            ],
+            "priority": 7,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-008",
+            "title": "Lab 3: n8n Hands-On Workshop",
+            "description": "As a manager, I want step-by-step guidance to build my first n8n workflow so that I can automate my simplified process.",
+            "acceptanceCriteria": [
+                "Create page /lab3/n8n-workshop with tutorial content",
+                "Step 1: Install/access n8n (cloud vs self-hosted options)",
+                "Step 2: Understanding nodes (Trigger, Action, Logic)",
+                "Step 3: Build a simple workflow (Webhook → IF → Slack/Email)",
+                "Integration with existing Workflow Generator from /workflow-generator",
+                "Video placeholder or animated GIF showing the process",
+                "Typecheck passes"
+            ],
+            "priority": 8,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-009",
+            "title": "Lab 3: Comet Browser Automation",
+            "description": "As a manager, I want to understand browser automation so that I can extract data or automate web tasks.",
+            "acceptanceCriteria": [
+                "Create page /lab3/comet-automation (enhance existing /browser-agentici)",
+                "Use cases: Web scraping, Form filling, Price monitoring, Report download",
+                "Step-by-step: How to use Comet for a simple task",
+                "Privacy warning: What data is captured, where it goes",
+                "Legal considerations: Terms of service, robots.txt",
+                "Typecheck passes"
+            ],
+            "priority": 9,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-010",
+            "title": "Lab 3: Antigravity App Generation",
+            "description": "As a manager, I want to create simple apps with AI assistance so that I can build internal tools without coding.",
+            "acceptanceCriteria": [
+                "Create page /lab3/antigravity-workshop (enhance existing /app-generation)",
+                "What Antigravity can build: Dashboards, Forms, Internal tools",
+                "Prompting techniques for better results",
+                "Example: Build a simple expense tracker in 10 minutes",
+                "Limitations: What requires IT involvement",
+                "Typecheck passes"
+            ],
+            "priority": 10,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-011",
+            "title": "Lab 4: Claude Code per Casi Avanzati",
+            "description": "As a manager, I want to understand when Claude Code is useful so that I can leverage it for complex scenarios.",
+            "acceptanceCriteria": [
+                "Create page /lab4/claude-code with advanced content",
+                "When to use Claude Code: Data analysis, Script generation, Code review",
+                "Example: Analyze Excel data with Claude Code prompts",
+                "Example: Generate a Python script for data transformation",
+                "IT collaboration: How to hand over generated code",
+                "Typecheck passes"
+            ],
+            "priority": 11,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-012",
+            "title": "Lab 4: Testing e Iterazione",
+            "description": "As a manager, I want to test my workflow with real data so that I can validate it works correctly.",
+            "acceptanceCriteria": [
+                "Create page /lab4/testing with testing methodology",
+                "Testing checklist: Happy path, Edge cases, Error handling",
+                "How to involve stakeholders in testing",
+                "Iteration loop: Test → Feedback → Improve",
+                "Signs your workflow is ready for IT handover",
+                "Typecheck passes"
+            ],
+            "priority": 12,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-013",
+            "title": "Lab 4: Template Documentazione IT",
+            "description": "As a manager, I want a documentation template so that IT can understand and industrialize my workflow.",
+            "acceptanceCriteria": [
+                "Create page /lab4/handover-template with interactive form",
+                "Sections: Process Overview, Workflow Diagram, Data Flow, Credentials Required, Error Handling, SLA Expectations",
+                "Auto-fill fields from previous labs where possible",
+                "Export as PDF or Markdown",
+                "Checklist: 'Is my documentation complete?'",
+                "Typecheck passes"
+            ],
+            "priority": 13,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-014",
+            "title": "Lab 4: Cerimonia di Handover",
+            "description": "As a manager, I want guidance for the IT handover meeting so that the transition is smooth.",
+            "acceptanceCriteria": [
+                "Create page /lab4/handover-ceremony with meeting guide",
+                "Agenda template for handover meeting",
+                "Key questions IT will ask (and how to answer)",
+                "Responsibility matrix: What manager maintains vs what IT owns",
+                "Success criteria for handover",
+                "Certificate of completion placeholder",
+                "Typecheck passes"
+            ],
+            "priority": 14,
+            "passes": false,
+            "notes": ""
+        },
+        {
+            "id": "US-015",
+            "title": "Navigation e Lab Progress Tracker",
+            "description": "As a manager, I want to track my progress through the labs so that I know what I've completed.",
+            "acceptanceCriteria": [
+                "Sidebar or header navigation showing all 4 labs and their modules",
+                "Progress indicator (percentage or checkmarks)",
+                "State persistence using localStorage",
+                "Ability to mark modules as complete",
+                "Lab overview pages (/lab1, /lab2, /lab3, /lab4) showing module list",
+                "Typecheck passes"
+            ],
+            "priority": 15,
+            "passes": false,
+            "notes": ""
+        }
+    ]
+}
